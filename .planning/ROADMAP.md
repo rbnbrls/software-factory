@@ -32,7 +32,20 @@ The roadmap first establishes a provider-independent Markdown workflow, then add
   2. Editing scope or acceptance criteria invalidates the approval recorded for the earlier work-item revision.
   3. The queue selects only the lowest-priority eligible item, enforces dependencies, and never grants two active work-item leases.
   4. After an interruption, the operator can inspect durable run state and safely resume or close the run before another writer starts.
-**Plans:** TBD
+**Plans:** 12 plans
+Plans:
+- [ ] 01-01-PLAN.md — Pin the toolchain (Node 24.22.3, TypeScript 7.0.2, @types/node 24.19.2) behind a blocking package/runtime checkpoint
+- [ ] 01-02-PLAN.md — Walking-skeleton tracer: confirm the on-disk format, then create/validate/approve/queue one real item offline
+- [ ] 01-03-PLAN.md — Complete the skeleton: demo runner, append-only run evidence, receipt, and pending-acceptance outcome
+- [ ] 01-04-PLAN.md — Work-item format contract: strict frontmatter bounds, fence-aware body grammar, published JSON Schema + parity test
+- [ ] 01-05-PLAN.md — Atomic mutations: validated transition table, rename-then-rewrite moves, ordered reconcile, read-only inspection proof
+- [ ] 01-06-PLAN.md — Approval bound to a revision hash: normalization, drift detection, decisions log, reconcile invalidation
+- [ ] 01-07-PLAN.md — Priority bands, dependency graph, cycle detection, and the deterministic queue JSON/human contract
+- [ ] 01-08-PLAN.md — Multi-repository local configuration with distinct policy and inert provider references (PROJ-01)
+- [ ] 01-09-PLAN.md — Global O_EXCL lease, heartbeat, classification, and real-process concurrency proof
+- [ ] 01-10-PLAN.md — Run-log replay, ten crash-state recovery, resume-same-run vs record-interruption-and-replace
+- [ ] 01-11-PLAN.md — Human acceptance gate: explicit accept/reject, write-once decision, proof the runner never reaches done
+- [ ] 01-12-PLAN.md — Offline/execution boundary scans, CLI exit-code contract matrix, and phase documentation
 
 ### Phase 2: Local Model Route
 **Goal:** The factory can run its task profiles through one measured local model route with controlled failure behavior.
@@ -132,7 +145,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Local Work Items and Queue | 0/TBD | Not started | - |
+| 1. Local Work Items and Queue | 0/12 | Planned | - |
 | 2. Local Model Route | 0/TBD | Not started | - |
 | 3. Isolated Coding Run | 0/TBD | Not started | - |
 | 4. Checks and Human Review | 0/TBD | Not started | - |
