@@ -2,7 +2,7 @@
 
 De canonieke tracker voor dit repository is de lokale Markdown-workflow onder `factory/`. Werkitems staan in `factory/work-items/` en worden per status bewaard in `ready/`, `in-progress/`, `blocked/` of `done/`. Status en workflowregels volgen `factory/WORKFLOW.md`; de projectgrenzen staan in `software-factory-projectplan.md`.
 
-Een werkitem is één concreet Markdown-bestand met stabiele identiteit, doel, status, eigenaar, afhankelijkheden, acceptatiecriteria, risicogrens, besluiten, providerreferenties en runhistorie. Het schema en de toegestane overgangen worden in fase 1 vastgesteld. Verzin daarom geen alternatieve frontmattervelden of statusovergangen voordat dat schema bestaat.
+Een werkitem is één concreet Markdown-bestand met stabiele identiteit, doel, status, eigenaar, afhankelijkheden, acceptatiecriteria, risicogrens, besluiten, providerreferenties en runhistorie. De machineleesbare velden staan in JSON-frontmatter volgens `factory/schemas/work-item.schema.json`; de CLI valideert ze tegen dat schema. Statusovergangen blijven gecontroleerd volgens `factory/WORKFLOW.md`.
 
 ## Wanneer een skill werk publiceert
 

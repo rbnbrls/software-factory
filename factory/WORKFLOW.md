@@ -4,7 +4,7 @@
 
 Deze map bevat de canonieke, lokale workflow van de software factory. Werkitems en besluiten blijven bruikbaar zonder tickettracker, orchestrator, git host of netwerkverbinding. Externe provider-ID's zijn verwijzingen; zij vervangen de status in Markdown niet.
 
-De statusmappen maken werkitems vindbaar. Het schema, de toegestane statussen, overgangen, globale claim/lease en atomaire verplaatsingsregels worden in fase 1 geïmplementeerd. Het werkitem blijft de canonieke bron; runs zijn afzonderlijke, append-only verslagen.
+De statusmappen maken werkitems vindbaar. `schemas/work-item.schema.json` beschrijft de machineleesbare velden; de workflowstatus in het werkitem moet overeenkomen met de statusmap. De CLI controleert het schema, prioriteitsbanden, open prioriteitsuniciteit, afhankelijkheidsreferenties en -cycli. Het werkitem blijft de canonieke bron; runs zijn afzonderlijke, append-only verslagen.
 
 ## Mappen
 
@@ -19,6 +19,8 @@ De statusmappen maken werkitems vindbaar. Het schema, de toegestane statussen, o
 ## Identiteit, categorie en prioriteit
 
 Elk werkitem heeft een persistent UUID. De categorie en prioriteit zijn aparte, veranderbare eigenschappen; prioriteit is geen identiteit of volgnummer.
+
+Elk werkitem begint met JSON-frontmatter tussen `---`-regels. `schemas/work-item.schema.json` is het contract voor die frontmatter. `workflowStatus` is de canonieke workflowstatus en moet overeenkomen met de statusmap; `triageStatus` gebruikt uitsluitend de waarden uit `docs/agents/triage-labels.md`. Acceptatiecriteria, afhankelijkheden en runverwijzingen staan als arrays in de frontmatter.
 
 De categorieën en prioriteitsbanden zijn:
 

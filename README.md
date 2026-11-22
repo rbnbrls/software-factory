@@ -40,6 +40,8 @@ De toolchain is gepind op Node.js `24.22.3` en de meegeleverde npm `11.19.1`. Ty
 | `npm run check` | Controleert de TypeScript-bron zonder build-output. |
 | `npm test` | Controleert het publieke CLI-gedrag. |
 | `npm run cli -- --help` | Start de lokale CLI en toont de gebruiksinstructie. |
+| `npm run cli -- validate` | Valideert alle canonieke werkitems lokaal. |
+| `npm run cli -- validate <bestand.md>` | Valideert een werkitem samen met de canonieke workflow. |
 
 De exacte runtime staat in `.nvmrc`; het pakket en de package manager zijn vastgelegd in `package.json` en `package-lock.json`.
 

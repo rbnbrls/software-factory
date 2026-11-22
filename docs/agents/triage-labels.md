@@ -1,6 +1,6 @@
 # Triage labels
 
-Engineering skills gebruiken vijf canonieke triagerollen. Omdat de tracker uit lokale Markdown bestaat, worden deze rollen als `Status:`-waarden in werkitems gebruikt, niet als externe labels. Dit triageveld staat los van de canonieke workflowstatus in de statusmap en de toekomstige workflow-frontmatter.
+Engineering skills gebruiken vijf canonieke triagerollen. Omdat de tracker uit lokale Markdown bestaat, worden deze rollen als `triageStatus`-waarden in JSON-frontmatter gebruikt, niet als externe labels. Dit triageveld staat los van de canonieke workflowstatus in `workflowStatus` en de statusmap.
 
 | Canonieke rol | Waarde | Betekenis |
 | --- | --- | --- |

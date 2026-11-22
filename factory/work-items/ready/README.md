@@ -1,3 +1,3 @@
 # Ready-werkitems
 
-Deze map bevat goedgekeurde werkitems die klaar zijn voor uitvoering. Elk werkitem heeft een persistent UUID, categorie en unieke prioriteit. De CLI kiest het laagst geprioriteerde item waarvan alle afhankelijkheden `done` zijn. Het schema en de validator worden in fase 1 vastgesteld; maak werkitems pas uitvoerbaar nadat die beschikbaar zijn.
+Deze map bevat werkitems met goedgekeurde scope die klaar zijn voor uitvoering. Elk werkitem heeft JSON-frontmatter met een persistent UUID, categorie, prioriteit, workflowstatus, triagestatus, scopegoedkeuring, afhankelijkheden, acceptatiecriteria en runverwijzingen. De CLI controleert deze velden en kiest later het laagst geprioriteerde item waarvan alle afhankelijkheden `done` zijn.
