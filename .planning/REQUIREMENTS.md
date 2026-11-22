@@ -87,16 +87,57 @@ None currently. Provider portability, temporary CI runners, and a second-provide
 
 ## Traceability
 
-Populated during roadmap creation.
+Which phase covers each requirement. Each v1 requirement is assigned to exactly one phase.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
+| WF-01 | Phase 1 | Pending |
+| WF-02 | Phase 1 | Pending |
+| WF-03 | Phase 1 | Pending |
+| WF-04 | Phase 1 | Pending |
+| WF-05 | Phase 1 | Pending |
+| WF-06 | Phase 1 | Pending |
+| WF-07 | Phase 1 | Pending |
+| WF-08 | Phase 1 | Pending |
+| PROJ-01 | Phase 1 | Pending |
+| MODEL-01 | Phase 2 | Pending |
+| MODEL-02 | Phase 2 | Pending |
+| MODEL-03 | Phase 2 | Pending |
+| RUN-01 | Phase 3 | Pending |
+| RUN-02 | Phase 3 | Pending |
+| RUN-03 | Phase 3 | Pending |
+| RUN-04 | Phase 3 | Pending |
+| RUN-05 | Phase 3 | Pending |
+| GIT-01 | Phase 3 | Pending |
+| QUAL-01 | Phase 4 | Pending |
+| QUAL-02 | Phase 4 | Pending |
+| QUAL-03 | Phase 4 | Pending |
+| QUAL-04 | Phase 4 | Pending |
+| DEP-01 | Phase 5 | Pending |
+| DEP-02 | Phase 5 | Pending |
+| DEP-03 | Phase 5 | Pending |
+| DEP-04 | Phase 5 | Pending |
+| DEP-05 | Phase 5 | Pending |
+| DEP-06 | Phase 5 | Pending |
+| OBS-01 | Phase 6 | Pending |
+| EV-01 | Phase 6 | Pending |
+| EV-02 | Phase 6 | Pending |
+| EV-03 | Phase 6 | Pending |
+| OPS-01 | Phase 6 | Pending |
+| OPS-02 | Phase 6 | Pending |
+| OPS-03 | Phase 6 | Pending |
+| ADPT-01 | Phase 7 | Pending |
+| ADPT-02 | Phase 7 | Pending |
+| ADPT-03 | Phase 7 | Pending |
+| CI-01 | Phase 8 | Pending |
+| CI-02 | Phase 8 | Pending |
+| ADPT-04 | Phase 9 | Pending |
 
 **Coverage:**
 - v1 requirements: 41 total
-- Mapped to phases: 0
-- Unmapped: 41 (pending roadmap creation)
+- Mapped to phases: 41
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-11-22*
-*Last updated: 2026-11-22 after initial definition*
+*Last updated: 2026-11-22 after roadmap creation*
