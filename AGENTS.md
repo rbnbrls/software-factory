@@ -16,7 +16,9 @@
 
 ## Tooling
 
-Er is nog geen applicatiecode of package-toolchain. Verzin daarom geen build-, test- of lintcommando's. Documenteer de gekozen commando's hier en in `README.md` zodra de TypeScript-toolchain wordt vastgelegd.
+De lokale CLI gebruikt Node.js `24.22.3`, npm `11.19.1`, TypeScript `7.0.2` en `@types/node` `24.19.2`. De runtime staat in `.nvmrc`; dependencies zijn exact gepind en vastgelegd in `package-lock.json`.
+
+Gebruik de commando's uit `README.md`: `npm ci` installeert dependencies, `npm run check` voert TypeScript-typecontrole uit, `npm test` voert CLI-gedragstests uit en `npm run cli -- --help` start de CLI. Voeg geen framework, linttool of providerpackage toe voordat een gekozen fase die nodig heeft.
 
 ## Agent skills
 

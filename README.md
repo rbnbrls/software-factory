@@ -28,6 +28,19 @@ De bredere doelstructuur staat in hoofdstuk 10 van het projectplan. Die structuu
 
 ## Huidige fase
 
-De repository wordt voorbereid voor fase 0 en fase 1. Deze basis bevat documentatie en mappen voor de Markdown-workflow. Applicatiecode, packageconfiguratie, providerkeuzes en installatieconfiguratie zijn nog niet toegevoegd.
+De repository bevat de documentatiebasis en een eerste lokale TypeScript-CLI. De Markdown-workflow zelf is nog niet geïmplementeerd; externe providers en infrastructuur zijn nog niet gekozen.
+
+## Lokale TypeScript-CLI
+
+De toolchain is gepind op Node.js `24.22.3` en de meegeleverde npm `11.19.1`. TypeScript `7.0.2` en `@types/node` `24.19.2` leveren typecontrole. Node voert TypeScript direct uit via native type stripping; de code gebruikt daarom alleen type-syntax die tijdens uitvoering kan worden verwijderd.
+
+| Commando | Doel |
+| --- | --- |
+| `npm ci` | Installeert exact de dependencies uit de lockfile. |
+| `npm run check` | Controleert de TypeScript-bron zonder build-output. |
+| `npm test` | Controleert het publieke CLI-gedrag. |
+| `npm run cli -- --help` | Start de lokale CLI en toont de gebruiksinstructie. |
+
+De exacte runtime staat in `.nvmrc`; het pakket en de package manager zijn vastgelegd in `package.json` en `package-lock.json`.
 
 Zie [het projectplan](software-factory-projectplan.md) voor architectuur, bouwfases en acceptatiecriteria, en [de setupinstructies](project-setup.md) voor repositoryrichtlijnen.

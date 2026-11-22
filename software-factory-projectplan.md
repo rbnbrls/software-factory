@@ -635,7 +635,7 @@ Deze waarden zijn niet uit eerdere infrastructuurkennis afgeleid. Kies ze tijden
 | Eerste tickettracker en git provider | Wanneer een externe tracker- of git-integratie nodig wordt | Minimale benodigde rechten en correcte adaptermapping. |
 | Definitief lokaal model | Fase 2 | Toolgebruik, kwaliteit, context en doorlooptijd. |
 | Coder-provisioningroute | Fase 3 | Werkt binnen gekozen gratis editie en Docker-VM-indeling. |
-| TypeScript-runtime, package manager en CLI-checkcommando's | Bij start van de lokale CLI-implementatie in fase 0/1 | Reproduceerbare lokale workflow; documenteer gekozen commando's in `README.md`. |
+| TypeScript-runtime, package manager en CLI-checkcommando's | Vastgelegd voor fase 0/1: Node.js 24.22.3, npm 11.19.1, TypeScript 7.0.2, `@types/node` 24.19.2 | Reproduceerbare lokale workflow; gekozen commando's staan in `README.md`. |
 | Applicatietaal en testcommando's | Bij selectie van de voorbeeldapp | Representatief voor de apps die de factory moet bouwen. |
 | Previewdomeinen en testdata | Fase 5 | Bereikbaarheid en scheiding van productie. |
 | Backupbestemming en bewaartermijnen | Voor productie | Herstel na verlies van de fysieke server. |
