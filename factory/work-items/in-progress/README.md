@@ -1,3 +1,3 @@
 # Werk in uitvoering
 
-Werkitems worden hier geplaatst wanneer de workflow ze gecontroleerd claimt. De claim/lease, atomaire statusmutatie en herstelregels worden in fase 1 vastgesteld.
+De workflow plaatst hier het enige werkitem dat de factory globaal actief uitvoert. Claim, lease, statusmutatie en runidentiteit worden atomair beheerd. Scopewijzigingen tijdens een run blokkeren afronding en vereisen menselijke hergoedkeuring.

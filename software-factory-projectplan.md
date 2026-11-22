@@ -1,6 +1,6 @@
 # Software factory projectbeschrijving en bouwplan
 
-Versie 1.1 · 22 november 2026
+Versie 1.2 · 22 november 2026
 
 Status: vastgesteld ontwerp en implementatieplan. Dit bestand bevat de projectkeuzes, architectuur, integratiecontracten, bouwvolgorde en acceptatiecriteria. Het bevat geen reeds geïnstalleerde omgeving of geteste configuratiebestanden. Productversies en API-contracten worden bij de start vastgepind en met de beschreven integratietests gecontroleerd.
 
@@ -53,9 +53,13 @@ Een run wacht niet op een menselijke reactie. De run schrijft vragen en resultaa
 
 Een tracker kan een individueel ticket ook “task” noemen. In dit document is een task het soort werk; een werkitem is een concreet Markdown-bestand met optionele externe ticketkoppeling.
 
+Een werkitem krijgt een persistent UUID. De categorie (`incident`, `issue` of `planbaar-werk`) en de unieke prioriteit zijn wijzigbaar en vormen geen identiteit. Incidenten zijn actuele storingen of ernstige degradaties; issues zijn gemelde bugs of verzoeken zonder directe storing; planbaar werk omvat goedgekeurde bouw- en onderhoudstaken. Prioriteitsbanden zijn respectievelijk 0–100, 101–200 en vanaf 201. Lagere waarden worden eerder uitgevoerd; tussenwaarden en herschikking zijn toegestaan. De prioriteit moet bij de categorie passen. Een waarde komt opnieuw beschikbaar bij afronding of prioriteitswijziging.
+
+De queue is globaal serieel: maximaal één werkitem is in uitvoering. Een geblokkeerd werkitem bezet de actieve plek niet. De CLI kiest het laagst geprioriteerde uitvoerbare werkitem in `ready/`; alle afhankelijkheden moeten `done` zijn. Bij geen uitvoerbaar werkitem stopt de CLI met uitleg. In fase 1 stelt een mens prioriteiten in. Een latere product-owner-agent kan alle inhoudelijke werkitemvelden aanpassen; scopewijzigingen vereisen menselijke hergoedkeuring, statusovergangen blijven gevalideerd en menselijke acceptatie blijft een menselijke beslissing.
+
 ### Tool-agnostische workflow en leidende Markdown
 
-De workflow wordt door agents bestuurd vanuit gewone Markdown en kleine, providerneutrale configuratiebestanden. Voor elk werkitem bestaat één canoniek bestand met stabiele ID, titel, doel, status, eigenaar, afhankelijkheden, acceptatiecriteria, risicogrens, beslissingen, providerreferenties en runhistorie. Statusovergangen zijn expliciet en gecontroleerd; agents schrijven wijzigingen atomair en behouden auditgeschiedenis. Een optionele tracker zoals Plane toont en bewerkt een gesynchroniseerde projectie.
+De workflow wordt door agents bestuurd vanuit gewone Markdown en kleine, providerneutrale configuratiebestanden. Voor elk werkitem bestaat één canoniek bestand met persistent UUID, titel, doel, categorie, prioriteit, status, eigenaar, afhankelijkheden, acceptatiecriteria, risicogrens, beslissingen, providerreferenties en runhistorie. Statusovergangen zijn expliciet en gecontroleerd; agents schrijven wijzigingen atomair en behouden auditgeschiedenis. Een optionele tracker zoals Plane toont en bewerkt een gesynchroniseerde projectie.
 
 ```text
 factory/
@@ -63,7 +67,7 @@ factory/
   providers.yaml              # actieve provider per servicecontract
   tasks/                      # taakdefinities: explore, spec, implement, review, release...
   work-items/
-    ready/ WF-0001.md
+    ready/ <uuid>.md
     in-progress/
     blocked/
     done/
@@ -72,7 +76,7 @@ factory/
   schemas/                    # frontmattervelden en statusvalidatie
 ```
 
-Mappen weerspiegelen status voor leesbaarheid; frontmatter is de machineleesbare statusbron. Verplaatsen en metadata bijwerken gebeurt als één gecontroleerde mutatie. Een lokale queue/claimfile met lease, expiry en run-ID voorkomt dubbel werk tussen agents. Alleen claims met verlopen lease mogen na verificatie opnieuw worden uitgegeven. Provider-ID's zijn aanvullende verwijzingen, geen primaire identiteit. Providerwebhooks worden genormaliseerd naar interne events en kunnen uitsluitend een run voorstellen; workflowregels en gates in Markdown bepalen of deze wordt uitgevoerd.
+Mappen weerspiegelen status voor leesbaarheid; frontmatter is de machineleesbare statusbron. Verplaatsen en metadata bijwerken gebeurt als één gecontroleerde mutatie. De lokale TypeScript-CLI beheert de queue, validator, globale claim/lease en runlog. Een lease verloopt niet tot heruitvoering zonder verificatie van de runstatus: een veilige hervatting gebruikt dezelfde run; anders wordt die run als onderbroken vastgelegd en start een nieuwe run. Provider-ID's zijn aanvullende verwijzingen, geen primaire identiteit. Providerwebhooks worden genormaliseerd naar interne events en kunnen uitsluitend een run voorstellen; workflowregels en gates in Markdown bepalen of deze wordt uitgevoerd.
 
 De bestanden blijven bruikbaar zonder Plane, Paperclip, GitHub, Forgejo, een hosted orchestrator of netwerkverbinding. Een checkout synchroniseren of committen is optioneel voor agents, maar wijzigingen aan de canonieke bestanden moeten duurzaam worden bewaard; de eerste installatie kan hiervoor een lokale Git-repository gebruiken. Providers leveren triggers, uitvoering, samenwerking en hosting, maar mogen geen eigen niet-gereconcilieerde statusmachine afdwingen. Elk providercontract heeft een capabilitybeschrijving, configuratie, adapter, conformance tests, migratieprocedure en herstelpad. Providerwissels gebeuren per service-slot met één actieve writer en een expliciete cutover.
 
@@ -291,7 +295,7 @@ Gebruik één intern eventmodel. Provider-specifieke headers en payloads worden 
   "type": "checks.completed",
   "occurredAt": "2026-11-21T12:00:00Z",
   "repositoryKey": "sample-app",
-  "workItemId": "WF-0001",
+  "workItemId": "550e8400-e29b-41d4-a716-446655440000",
   "pullRequestId": "42",
   "commitSha": "full-commit-sha",
   "runId": "factory-run-id",
@@ -501,17 +505,21 @@ Applicatierepositories bieden vaste commando's voor checks, build en smokecheck.
 
 ## 11 Bouwfases en acceptatiecriteria
 
-### Fase 0 Projectbasis en versiecontrole
+### Fase 0 Projectbasis en lokale CLI-toolchain
 
-Maak de factoryrepository, leg dit plan en de eerste ADR's vast en kies concrete productversies. Selecteer een kleine voorbeeldapplicatie met een testbare gebruikersflow. Vul de installatieparameters uit hoofdstuk 14 in voor de eerste omgeving.
+Leg repository, projectplan en eerste ADR's vast. Kies en pin de TypeScript-toolchain die nodig is om de lokale workflow-CLI te bouwen en documenteer de gekozen commando's in `README.md`. Stel nog geen fysieke infrastructuur, modelservice, deploymentprovider of voorbeeldapp vast; bepaal die keuzes wanneer de betreffende omgeving of verticale keten aan de beurt is.
 
-Acceptatie: alle images, tools en skills zijn gepind; er zijn geen echte secrets in Git; de voorbeeldapp heeft reproduceerbare check- en buildcommando's; beheerinterfaces en uitvoeromgevingen hebben een beschreven toegangsmodel.
+Acceptatie: de repository bevat de vastgestelde architectuur- en workflowafspraken; de gekozen CLI-toolchain is reproduceerbaar en gedocumenteerd; er staan geen echte secrets in Git. Toegangsmodel, resources en infrastructuurversies worden vóór provisioning van die omgeving vastgelegd.
 
-### Fase 1 Markdown-workflow en optionele tracker
+### Fase 1 Markdown-workflow en lokale CLI
 
-Implementeer `WORKFLOW.md`, work-item-schema, statusvalidator, lokale claim/lease en runlog. Bouw eerst zonder externe tracker. Voeg Plane-adapter toe als optionele ticketinterface; documenteer Paperclip-mapping maar maak deze niet vereist. Koppel een gekozen git host en laat bestaande CI-checks terugmelden.
+Implementeer `WORKFLOW.md`, work-item-schema, statusvalidator, globale claim/lease, lokale queue en append-only runlog. Begin met een ingebouwde demonstratietaak via een expliciete runner-interface; voer geen willekeurige shellcommando's of toekomstige providerintegraties uit. De eerste keten start met een menselijk goedgekeurd werkitem in `ready/`. Externe tickettrackers, git hosts, Forgejo-labels en Telegram-notificaties zijn geen fase-1-vereiste.
 
-Acceptatie: een work-item kan offline/lokaal van ready tot done worden doorlopen; na restart is status te herstellen uit Markdown; ontbrekende tracker heeft geen effect op uitvoering; tracker-sync is idempotent; agents kunnen niet zelfstandig mergen; oude commitstatus kan geen nieuwe commit goedkeuren.
+De CLI voert globaal maximaal één werkitem tegelijk uit. Hij kiest het laagste unieke prioriteitsnummer uit uitvoerbare `ready/`-items; afhankelijkheden moeten `done` zijn. Onbekende afhankelijkheden en cycli zijn validatiefouten. Geblokkeerde items houden de queue niet tegen, maar hun afhankelijke werk blijft wachten. Als niets uitvoerbaar is, stopt de CLI met uitleg. Een wijziging aan scope of acceptatiecriteria maakt de bestaande menselijke goedkeuring ongeldig.
+
+Kwaliteitsgates blijven gescheiden: deterministische checks, agentreview en menselijke beoordeling/acceptatie. In deze fase kan een agentreview buiten de CLI worden uitgevoerd en als runbewijs worden vastgelegd; de reviewer heeft een aparte read-only context. Herstel na afkeuring krijgt een nieuwe run. Bij wachten op menselijke input eindigt de run en wordt het werkitem `blocked`; een later besluit kan een nieuwe run starten. Een verlopen lease leidt eerst tot runverificatie, veilige hervatting of vastlegging als onderbroken.
+
+Acceptatie: een goedgekeurd werkitem doorloopt offline/lokaal `ready` naar `done` via de CLI; na herstart is de status uit Markdown te herstellen; nooit zijn twee werkitems globaal tegelijk in uitvoering; de queue kiest alleen items met voltooide afhankelijkheden; checks, agentreview en menselijke acceptatie zijn afzonderlijk vastgelegd; werk kan veilig worden hervat of als onderbroken worden afgesloten. Externe tracker-sync en commitgebonden CI-controles volgen pas wanneer die integraties gekozen en nodig zijn.
 
 ### Fase 2 Modelroute
 
@@ -527,7 +535,7 @@ Acceptatie: een kleine wijziging levert een PR; een tweede run krijgt geen oude 
 
 ### Fase 4 Checks en review
 
-Laat Implement, CI, Review en Rework samenwerken. De Reviewer krijgt een eigen context en geen implementatieschrijfrechten. De uitvoering past de gekozen Matt Pocock-instructies toe.
+Automatiseer de eerder vastgelegde reviewgate binnen de gekozen agentruntime en laat Implement, CI, Review en Rework samenwerken. De Reviewer krijgt een eigen context en geen implementatieschrijfrechten. De uitvoering past de gekozen Matt Pocock-instructies toe.
 
 Acceptatie: een opzettelijk defect wordt door een passende test of review gevonden; herstel leidt tot nieuwe commitgebonden controles; de rondelimiet escaleert naar de juiste mens; ticketwijzigingen tijdens uitvoering worden niet stilzwijgend meegenomen.
 
@@ -621,13 +629,14 @@ Deze waarden zijn niet uit eerdere infrastructuurkennis afgeleid. Kies ze tijden
 
 | Parameter | Moment van keuze | Besliscriterium |
 | --- | --- | --- |
-| CPU, RAM, opslag en eventuele GPU | Fase 0 en modelproef | Gemeten runbelasting en modelcontext. |
-| VM-indeling en netwerkgrenzen | Fase 0 | Scheiding tussen beheer, code-uitvoering en productie. |
-| Domeinen, TLS en webhookingang | Fase 1 | Gekozen provider-events kunnen veilig ontvangen worden; polling blijft fallback. |
-| Eerste tickettracker en git provider | Fase 1 | Minimale benodigde rechten en correcte adaptermapping. |
+| CPU, RAM, opslag en eventuele GPU | Bij modelproef en provisioning van de eerste uitvoeringsomgeving | Gemeten runbelasting en modelcontext. |
+| VM-indeling en netwerkgrenzen | Vóór provisioning van de eerste uitvoeringsomgeving | Scheiding tussen beheer, code-uitvoering en productie. |
+| Domeinen, TLS en webhookingang | Wanneer een externe providerintegratie gekozen wordt | Gekozen provider-events kunnen veilig ontvangen worden; polling blijft fallback. |
+| Eerste tickettracker en git provider | Wanneer een externe tracker- of git-integratie nodig wordt | Minimale benodigde rechten en correcte adaptermapping. |
 | Definitief lokaal model | Fase 2 | Toolgebruik, kwaliteit, context en doorlooptijd. |
 | Coder-provisioningroute | Fase 3 | Werkt binnen gekozen gratis editie en Docker-VM-indeling. |
-| Applicatietaal en testcommando's | Voorbeeldapp in fase 0 | Representatief voor de apps die de factory moet bouwen. |
+| TypeScript-runtime, package manager en CLI-checkcommando's | Bij start van de lokale CLI-implementatie in fase 0/1 | Reproduceerbare lokale workflow; documenteer gekozen commando's in `README.md`. |
+| Applicatietaal en testcommando's | Bij selectie van de voorbeeldapp | Representatief voor de apps die de factory moet bouwen. |
 | Previewdomeinen en testdata | Fase 5 | Bereikbaarheid en scheiding van productie. |
 | Backupbestemming en bewaartermijnen | Voor productie | Herstel na verlies van de fysieke server. |
 | Log- en promptretentie | Fase 6 | Diagnosebehoefte, privacy en opslagcapaciteit. |
@@ -635,6 +644,6 @@ Deze waarden zijn niet uit eerdere infrastructuurkennis afgeleid. Kies ze tijden
 
 ## 15 Eerste uitvoerbare opdracht
 
-Start met fase 0 en fase 1: maak de factoryrepository, leg servicecontracten en Markdown-workflow vast en voer één lokale work-itemketen uit zonder externe tickettracker. Koppel daarna optioneel Plane en één git provider met bestaande checks. Bouw vervolgens één verticale keten met een kleine voorbeeldapp. Vergroot het aantal agents, repositories en automatische triggers pas wanneer die keten ook bij fouten betrouwbaar werkt.
+Start met fase 0 en fase 1: maak de factoryrepository, leg servicecontracten en Markdown-workflow vast en voer één lokale werkitemketen uit zonder externe tickettracker. Voeg Plane, Forgejo/GitHub of andere providerintegraties pas toe wanneer een concrete volgende fase ze nodig heeft. Bouw daarna één verticale keten met een kleine voorbeeldapp. Vergroot het aantal agents, repositories en automatische triggers pas wanneer die keten ook bij fouten betrouwbaar werkt.
 
 Gebruik bij iedere fase de acceptatiecriteria als afrondingsvoorwaarde. Productinstallatie alleen is geen bewijs dat de factoryfunctie werkt.
