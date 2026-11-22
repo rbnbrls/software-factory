@@ -17,3 +17,17 @@
 ## Tooling
 
 Er is nog geen applicatiecode of package-toolchain. Verzin daarom geen build-, test- of lintcommando's. Documenteer de gekozen commando's hier en in `README.md` zodra de TypeScript-toolchain wordt vastgelegd.
+
+## Agent skills
+
+### Issue tracker
+
+Lokale Markdown-werkitems in `factory/work-items/` zijn de canonieke tracker. Zie `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Gebruik de vijf standaard triagerollen zoals vastgelegd in `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Dit is een single-context repository met `GLOSSARY.md` en root-ADR's in `docs/adr/`. Zie `docs/agents/domain.md`.
