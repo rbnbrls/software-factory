@@ -34,17 +34,40 @@ The roadmap first establishes a provider-independent Markdown workflow, then add
   4. After an interruption, the operator can inspect durable run state and safely resume or close the run before another writer starts.
 **Plans:** 12 plans
 Plans:
+**Wave 1**
 - [ ] 01-01-PLAN.md — Pin the toolchain (Node 24.22.3, TypeScript 7.0.2, @types/node 24.19.2) behind a blocking package/runtime checkpoint
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 01-02-PLAN.md — Walking-skeleton tracer: confirm the on-disk format, then create/validate/approve/queue one real item offline
+
+**Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 01-03-PLAN.md — Complete the skeleton: demo runner, append-only run evidence, receipt, and pending-acceptance outcome
+
+**Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 01-04-PLAN.md — Work-item format contract: strict frontmatter bounds, fence-aware body grammar, published JSON Schema + parity test
+
+**Wave 5** *(blocked on Wave 4 completion)*
 - [ ] 01-05-PLAN.md — Atomic mutations: validated transition table, rename-then-rewrite moves, ordered reconcile, read-only inspection proof
+
+**Wave 6** *(blocked on Wave 5 completion)*
 - [ ] 01-06-PLAN.md — Approval bound to a revision hash: normalization, drift detection, decisions log, reconcile invalidation
+
+**Wave 7** *(blocked on Wave 6 completion)*
 - [ ] 01-07-PLAN.md — Priority bands, dependency graph, cycle detection, and the deterministic queue JSON/human contract
+
+**Wave 8** *(blocked on Wave 7 completion)*
 - [ ] 01-08-PLAN.md — Multi-repository local configuration with distinct policy and inert provider references (PROJ-01)
+
+**Wave 9** *(blocked on Wave 8 completion)*
 - [ ] 01-09-PLAN.md — Global O_EXCL lease, heartbeat, classification, and real-process concurrency proof
+
+**Wave 10** *(blocked on Wave 9 completion)*
 - [ ] 01-10-PLAN.md — Run-log replay, ten crash-state recovery, resume-same-run vs record-interruption-and-replace
+
+**Wave 11** *(blocked on Wave 10 completion)*
 - [ ] 01-11-PLAN.md — Human acceptance gate: explicit accept/reject, write-once decision, proof the runner never reaches done
+
+**Wave 12** *(blocked on Wave 11 completion)*
 - [ ] 01-12-PLAN.md — Offline/execution boundary scans, CLI exit-code contract matrix, and phase documentation
 
 ### Phase 2: Local Model Route
