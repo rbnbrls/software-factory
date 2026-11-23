@@ -1,1 +1,0 @@
-{"content":"Ollama supports a subset of OpenAI API and documents tool calling, but compatibility is not full parity. Keep it local with external fallback off and test streamed multi-turn tool call/continuation behavior for the selected model.","source":"web","provider":"websearch","confidence":"MEDIUM","fetched_at":"2026-11-22T21:04:52.375Z","ttl":86400000,"kind":"web"}
