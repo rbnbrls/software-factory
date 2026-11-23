@@ -1,0 +1,58 @@
+{
+  "contract": "1.0.0",
+  "flavor": "core",
+  "milestone": null,
+  "phases": [
+    {
+      "number": "1",
+      "name": "Local Work Items and Queue",
+      "status": "in_progress"
+    },
+    {
+      "number": "2",
+      "name": "Local Model Route",
+      "status": "pending"
+    },
+    {
+      "number": "3",
+      "name": "Isolated Coding Run",
+      "status": "pending"
+    },
+    {
+      "number": "4",
+      "name": "Checks and Human Review",
+      "status": "pending"
+    },
+    {
+      "number": "5",
+      "name": "Preview and Controlled Release",
+      "status": "pending"
+    },
+    {
+      "number": "6",
+      "name": "Recovery and Operations",
+      "status": "pending"
+    },
+    {
+      "number": "7",
+      "name": "Tracker and Orchestrator Adapters",
+      "status": "pending"
+    },
+    {
+      "number": "8",
+      "name": "Temporary CI Runners",
+      "status": "pending"
+    },
+    {
+      "number": "9",
+      "name": "Second-Provider Cutover",
+      "status": "pending"
+    }
+  ],
+  "next": {
+    "command": "/gsd-progress --next",
+    "label": "Advance to the next step",
+    "reason": "Phase 1 of 9 · 0% · executing"
+  },
+  "updated_at": "2026-11-23T07:40:04.824Z"
+}
